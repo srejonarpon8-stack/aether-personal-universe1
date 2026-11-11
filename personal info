@@ -1,0 +1,578 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070914">
+<meta name="description" content="AETHER — the personal universe of Srejon Paroi Arpon. Exploring AI, creativity, automation, design and ideas.">
+<title>AETHER — Srejon Paroi Arpon</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+--bg:#070914;
+--panel:#10162a;
+--ink:#f4f5ff;
+--muted:#9aa3bf;
+--soft:#c6cbe0;
+--line:#ffffff20;
+--blue:#83a7ff;
+--violet:#a78bfa;
+--cyan:#67e8f9;
+--mono:"DM Mono",monospace;
+--display:"Space Grotesk",sans-serif;
+--body:"Manrope",sans-serif;
+--g:clamp(20px,5vw,76px);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px;background:var(--bg)}
+body{
+margin:0;
+background:radial-gradient(ellipse at 80% 0%,#19204a55,transparent 38%),var(--bg);
+color:var(--ink);
+font-family:var(--body);
+overflow-x:hidden
+}
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:20;
+opacity:.1;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")
+}
+
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+.mono,.eyebrow{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.mono,.muted{color:var(--muted)}
+.eyebrow{color:var(--blue)}
+.wrap{width:min(1440px,100%);margin:auto;padding-left:var(--g);padding-right:var(--g)}
+.section{padding-top:105px;padding-bottom:110px;border-top:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font:10px var(--mono);letter-spacing:.13em;text-transform:uppercase}
+.title{font:600 clamp(42px,7vw,92px)/.98 var(--display);letter-spacing:-.065em;margin:34px 0 24px}
+.title em{font-style:normal;color:var(--blue)}
+.pill{display:inline-flex;gap:8px;border:1px solid var(--line);border-radius:99px;padding:9px 13px;color:var(--soft);font:10px var(--mono);text-transform:uppercase;background:#ffffff08}
+.btn{display:inline-flex;gap:12px;align-items:center;padding:14px 18px;border-radius:99px;border:1px solid #93aaff66;background:linear-gradient(110deg,#789aff25,#a78bfa1c);font:10px var(--mono);letter-spacing:.09em;text-transform:uppercase;transition:.3s;cursor:pointer}
+.btn:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 10px 40px #647dff25}
+.secondary{background:transparent;border-color:var(--line)}
+.reveal{opacity:0;transform:translateY(24px);transition:.8s}
+.reveal.show{opacity:1;transform:none}
+
+.intro{position:fixed;inset:0;z-index:100;background:#070914;display:grid;place-items:center;animation:out .8s 1.7s forwards;pointer-events:none;text-align:center}
+.intro b{font:700 clamp(50px,12vw,130px) var(--display);letter-spacing:-.1em;background:linear-gradient(100deg,#fff,#91aaff,#c4a5ff);background-clip:text;color:transparent}
+.intro i{display:block;width:min(260px,60vw);height:2px;background:linear-gradient(90deg,var(--blue),var(--violet));margin:22px auto;animation:load 1.3s both}
+.intro small{font:9px var(--mono);letter-spacing:.2em;color:var(--muted)}
+@keyframes out{to{opacity:0;visibility:hidden}}
+@keyframes load{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1)}}
+
+header{height:78px;position:fixed;z-index:50;inset:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 var(--g);background:linear-gradient(#070914ed,#070914a8,transparent);backdrop-filter:blur(12px)}
+.brand{font:700 17px var(--display);letter-spacing:.17em}
+.brand b{color:var(--blue)}
+.brand small{font:9px var(--mono);color:var(--muted);letter-spacing:.1em;margin-left:8px}
+.nav{display:flex;align-items:center;gap:25px}
+.nav a,.menu a{font:10px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:.2s}
+.nav a:hover,.menu a:hover{color:white}
+.nav .nav-cta{padding:10px 14px;border:1px solid var(--line);border-radius:99px;color:white}
+.menu-btn{display:none;background:#10162a;border:1px solid var(--line);padding:10px 13px;border-radius:30px;font:10px var(--mono);color:white}
+.menu{display:none;position:absolute;top:68px;right:var(--g);width:min(300px,calc(100vw - 40px));padding:15px 20px;background:#10162a;border:1px solid var(--line);border-radius:16px}
+.menu.open{display:grid}
+.menu a{padding:14px 0;border-bottom:1px solid var(--line)}
+.menu a:last-child{border:0}
+
+.hero{height:100svh;min-height:760px;max-height:1100px;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding-top:135px;padding-bottom:36px;overflow:hidden}
+.gridbg{position:absolute;inset:0;opacity:.23;background-image:linear-gradient(#7586ff12 1px,transparent 1px),linear-gradient(90deg,#7586ff12 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+#particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-top,.hero-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;z-index:2}
+.hero-center{position:absolute;inset:18% 0 13%;display:grid;place-items:center;text-align:center}
+.orb-wrap{position:absolute;width:min(60vw,650px);aspect-ratio:1;display:grid;place-items:center;animation:float 8s ease-in-out infinite;transform-style:preserve-3d}
+.orb{width:35%;aspect-ratio:1;border-radius:36%;background:radial-gradient(circle at 30% 25%,#fff,#c9d6ff 8%,#829dff 20%,#4444a2 48%,#151b43 72%,#0a0c20);box-shadow:inset -25px -30px 50px #050719,inset 12px 12px 30px #ffffff99,0 0 80px #778dff66,0 0 180px #6554e044;transform:rotate(35deg);animation:pulse 5s infinite}
+.orbit{position:absolute;width:76%;height:28%;border:1px solid #b8caff88;border-radius:50%;transform:rotate(-27deg);box-shadow:0 0 25px #89aaff2b}
+.orbit.two{width:90%;height:43%;transform:rotate(56deg);border-color:#a78bfa88}
+.orbit.three{width:105%;height:20%;transform:rotate(82deg);border-color:#67e8f955}
+.glow{position:absolute;width:60%;height:60%;border-radius:50%;background:#596eff22;filter:blur(55px)}
+@keyframes float{50%{transform:translateY(-20px) rotateY(8deg)}}
+@keyframes pulse{50%{box-shadow:inset -25px -30px 50px #050719,inset 12px 12px 30px #ffffff99,0 0 110px #778dff99,0 0 220px #6554e066}}
+.hero-title{position:relative;z-index:2;font:700 clamp(72px,17vw,230px)/.78 var(--display);letter-spacing:-.105em;margin:0;background:linear-gradient(180deg,#fff 5%,#cbd5ff 55%,#8398ff);background-clip:text;color:transparent}
+.hero-title span{display:inline-block;animation:letter .9s both;animation-delay:calc(var(--i)*.08s)}
+@keyframes letter{from{opacity:0;transform:translateY(80px) rotate(8deg);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+.tagline{position:relative;z-index:3;margin-top:30px;font:500 clamp(16px,2.1vw,25px)/1.45 var(--display);color:#dce2ff}
+.tagline em{font-style:normal;color:var(--blue)}
+.actions{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.hero-desc{max-width:460px;text-align:left;color:var(--muted);font-size:13px;line-height:1.8}
+.scroll{color:var(--muted);font:10px var(--mono)}
+.scroll i{color:var(--blue);font-style:normal;font-size:18px}
+
+.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:8vw;align-items:start;margin-top:70px}
+.portrait{min-height:300px;border:1px solid var(--line);border-radius:22px;background:radial-gradient(circle at 50% 40%,#536bcb55,transparent 48%),linear-gradient(145deg,#171d38,#090c19);display:grid;place-items:center;position:relative;overflow:hidden}
+.portrait-orb{width:145px;height:145px;border-radius:38%;background:linear-gradient(135deg,#fff,#819dff 35%,#5b48a5 75%);box-shadow:0 0 70px #7c8dff55;transform:rotate(35deg);animation:float 7s infinite}
+.portrait:after{content:"S / P / A";position:absolute;bottom:18px;left:20px;font:10px var(--mono);letter-spacing:.18em;color:#b8c5ff}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:17px;background:#ffffff05}
+.stat strong{display:block;font:600 24px var(--display);color:var(--blue)}
+.stat span{font:9px var(--mono);color:var(--muted);text-transform:uppercase}
+.about-copy h3{font:600 clamp(27px,3.4vw,45px)/1.15 var(--display);letter-spacing:-.04em;margin:0 0 22px}
+.about-copy p{color:var(--soft);font-size:15px;line-height:1.9;margin:0 0 18px}
+.highlight{color:var(--blue)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:55px}
+.card{min-height:220px;padding:25px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#151b32aa,#0b0f1e);position:relative;overflow:hidden;transition:.35s}
+.card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-90px;top:-90px;background:#718bff1c;filter:blur(20px)}
+.card:hover{transform:translateY(-7px);border-color:#839eff88}
+.card-icon{font-size:25px;color:var(--blue)}
+.card h3{font:600 22px var(--display);margin:28px 0 10px}
+.card p{font-size:13px;line-height:1.7;color:var(--muted);max-width:330px}
+.card-num{position:absolute;right:22px;top:24px;font:10px var(--mono);color:#68718e}
+
+.skill-layout{display:grid;grid-template-columns:1fr 1fr;gap:7vw;margin-top:55px}
+.skill-group{border-top:1px solid var(--line);padding-top:20px}
+.skill-group h3{font:600 22px var(--display);margin:0 0 20px}
+.skill{margin:18px 0}
+.skill-top{display:flex;justify-content:space-between;font-size:13px;color:var(--soft);margin-bottom:9px}
+.skill-top span:last-child{font:9px var(--mono);color:var(--muted);text-transform:uppercase}
+.track{height:5px;background:#ffffff12;border-radius:10px;overflow:hidden}
+.track i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--blue),var(--violet));transform:scaleX(0);transform-origin:left;transition:transform 1.2s}
+.skill-group.show .track i{transform:scaleX(1)}
+.note{font:10px/1.7 var(--mono);color:var(--muted);margin-top:25px}
+
+.timeline{margin-top:55px;max-width:900px}
+.timeline-item{display:grid;grid-template-columns:125px 1fr;gap:25px;padding:25px 0;border-top:1px solid var(--line)}
+.date{font:10px var(--mono);color:var(--blue);letter-spacing:.1em}
+.timeline-item h3{font:600 20px var(--display);margin:0 0 8px}
+.timeline-item p{font-size:13px;line-height:1.7;color:var(--muted);margin:0;max-width:650px}
+.status{display:inline-block;margin-top:10px;font:9px var(--mono);color:#a5b7ff;border:1px solid #8da7ff44;border-radius:30px;padding:6px 9px;text-transform:uppercase}
+
+.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:55px}
+.project{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#0d1222;transition:.35s}
+.project:hover{transform:translateY(-6px);border-color:#819bff88}
+.art{height:220px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#475bbd77,transparent 45%),linear-gradient(140deg,#171d3b,#090b17)}
+.shape{width:115px;height:145px;border:1px solid #d8e2ff99;background:linear-gradient(135deg,#e2e8ff44,#667fff11);clip-path:polygon(50% 0,100% 24%,78% 100%,15% 86%,0 22%);transform:rotate(25deg);box-shadow:0 0 55px #7890ff55;animation:float 7s infinite}
+.art.alt{background:radial-gradient(circle at 50% 50%,#714da677,transparent 46%),linear-gradient(140deg,#201632,#090b17)}
+.art.alt .shape{border-radius:50%;clip-path:none;width:150px;height:150px;transform:rotateX(65deg)}
+.art.third{background:radial-gradient(circle at 50% 50%,#226c8b66,transparent 48%),linear-gradient(140deg,#102638,#080c17)}
+.art.third .shape{clip-path:polygon(50% 0,100% 100%,0 100%);width:160px;height:140px}
+.art.fourth{background:radial-gradient(circle at 50% 50%,#6954a866,transparent 48%),linear-gradient(140deg,#211638,#080b17)}
+.art.fourth .shape{width:170px;height:90px;border-radius:50%;clip-path:none}
+.project-info{padding:22px}
+.project-info .meta{font:9px var(--mono);color:var(--blue);letter-spacing:.1em;text-transform:uppercase}
+.project-info h3{font:600 22px var(--display);margin:10px 0}
+.project-info p{font-size:13px;color:var(--muted);line-height:1.7;margin:0}
+
+.faith-panel{margin-top:55px;border:1px solid #9c8bff44;border-radius:24px;padding:clamp(25px,5vw,55px);background:radial-gradient(ellipse at 90% 10%,#8b72ff22,transparent 45%),linear-gradient(135deg,#17172f,#0b1020);position:relative;overflow:hidden}
+.faith-panel:after{content:"✦";position:absolute;right:7%;top:4%;font-size:clamp(90px,15vw,190px);color:#c6b8ff0c}
+.faith-quote{font:500 clamp(25px,4vw,47px)/1.25 var(--display);letter-spacing:-.04em;max-width:850px;margin:30px 0}
+.faith-quote em{font-style:normal;color:#c4b4ff}
+.faith-panel p{color:#c0c2d9;line-height:1.8;font-size:14px;max-width:700px}
+.verse{font:10px var(--mono);color:#c4b4ff;letter-spacing:.1em;margin-top:25px}
+
+.journal-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:55px}
+.journal-feature,.journal-side{border:1px solid var(--line);border-radius:18px;background:#ffffff05;padding:25px}
+.journal-feature h3{font:600 clamp(25px,4vw,42px)/1.1 var(--display);margin:18px 0}
+.journal-feature p,.journal-side p{font-size:13px;line-height:1.7;color:var(--muted)}
+.journal-side a{display:block;padding:17px 0;border-bottom:1px solid var(--line);font-size:14px}
+.journal-side a:last-child{border:0}
+
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:45px}
+.tool{border:1px solid var(--line);border-radius:14px;padding:17px;background:#ffffff05;transition:.25s}
+.tool:hover{border-color:#839eff88;transform:translateY(-4px)}
+.tool b{display:block;font:600 15px var(--display);margin-bottom:7px}
+.tool span{font:9px var(--mono);color:var(--muted);text-transform:uppercase}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:8vw;margin-top:45px}
+.contact-copy{font-size:15px;line-height:1.8;color:var(--muted);max-width:420px}
+.contact-copy strong{color:white}
+.form{display:grid;gap:16px}
+.form label{font:9px var(--mono);letter-spacing:.12em;color:var(--muted)}
+.form input,.form textarea{display:block;width:100%;margin-top:9px;background:#ffffff08;border:1px solid var(--line);border-radius:10px;padding:14px;color:white;outline:none;resize:vertical}
+.form input:focus,.form textarea:focus{border-color:var(--blue)}
+.footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:35px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-note{font:9px var(--mono);color:var(--muted);letter-spacing:.1em}
+.back{font:10px var(--mono);color:var(--blue)}
+.cursor{position:fixed;width:280px;height:280px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,#718aff10,transparent 68%);transform:translate(-50%,-50%)}
+
+@media(max-width:850px){
+.nav{display:none}
+.menu-btn{display:block}
+.about-grid{grid-template-columns:1fr;gap:35px}
+.portrait{min-height:240px}
+.cards{grid-template-columns:1fr 1fr}
+.skill-layout{gap:35px}
+.tools{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:600px){
+.hero{min-height:740px;padding-top:115px}
+.hero-center{inset:25% 0 20%}
+.hero-title{font-size:clamp(66px,18vw,110px)}
+.orb-wrap{width:95vw}
+.hero-bottom{align-items:flex-end}
+.hero-desc{font-size:11px;max-width:210px}
+.hide-mobile{display:none}
+.section{padding-top:75px;padding-bottom:80px}
+.head span:last-child{max-width:130px;text-align:right}
+.title{font-size:clamp(43px,12vw,66px)}
+.about-grid{margin-top:45px}
+.cards{grid-template-columns:1fr}
+.card{min-height:190px}
+.skill-layout{grid-template-columns:1fr}
+.timeline-item{grid-template-columns:85px 1fr;gap:12px}
+.projects{grid-template-columns:1fr}
+.art{height:190px}
+.journal-grid,.contact-grid{grid-template-columns:1fr}
+.tools{grid-template-columns:1fr 1fr}
+.footer{align-items:flex-start;flex-direction:column}
+}
+
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+.reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+<div class="intro">
+<div>
+<b>AETHER.</b>
+<i></i>
+<small>ENTERING SREJON'S UNIVERSE</small>
+</div>
+</div>
+<div class="cursor" id="cursor"></div>
+
+<header>
+<a class="brand" href="#home">AETHER<b>.</b><small>BY SREJON</small></a>
+<nav class="nav">
+<a href="#about">The human</a>
+<a href="#focus">Interests</a>
+<a href="#work">The lab</a>
+<a href="#faith">Faith</a>
+<a class="nav-cta" href="#contact">Let's connect ↗</a>
+</nav>
+<button class="menu-btn" id="menuBtn">MENU +</button>
+<nav class="menu" id="menu">
+<a href="#about">The human ↗</a>
+<a href="#focus">Interests ↗</a>
+<a href="#skills">The arsenal ↗</a>
+<a href="#journey">The lore ↗</a>
+<a href="#work">The lab ↗</a>
+<a href="#journal">Brain dump ↗</a>
+<a href="#toolbox">Toolbox ↗</a>
+<a href="#faith">Faith ↗</a>
+<a href="#contact">Let's connect ↗</a>
+</nav>
+</header>
+
+<main>
+
+<section class="hero wrap" id="home">
+<div class="gridbg"></div>
+<canvas id="particles"></canvas>
+<div class="hero-top">
+<span class="eyebrow">PERSONAL UNIVERSE / 001</span>
+<span class="mono right">CREATIVITY × TECHNOLOGY × FAITH</span>
+</div>
+<div class="hero-center">
+<div class="orb-wrap" id="orb">
+<div class="glow"></div>
+<div class="orbit"></div>
+<div class="orbit two"></div>
+<div class="orbit three"></div>
+<div class="orb"></div>
+</div>
+<div>
+<h1 class="hero-title" id="heroTitle">AETHER</h1>
+<p class="tagline">Curious by nature. <em>Creative by choice.</em><br>Limitless in ambition.</p>
+<div class="actions">
+<a class="btn" href="#work">Explore my universe ↘</a>
+<a class="btn secondary" href="#about">Meet the human ↗</a>
+</div>
+</div>
+</div>
+<div class="hero-bottom">
+<p class="hero-desc">Hey, I'm <strong style="color:white">Srejon Paroi Arpon</strong> — a student, creator and future-focused thinker exploring AI, automation, business and the art of making things.</p>
+<span class="scroll hide-mobile">SCROLL TO EXPLORE ↓</span>
+<span class="mono hide-mobile">DREAM HIGHER / BUILD BOLDER</span>
+</div>
+</section>
+
+<section class="section wrap" id="about">
+<div class="head"><span>01 / THE HUMAN</span><span>A LITTLE ABOUT ME</span></div>
+<div class="about-grid">
+<aside class="reveal">
+<div class="portrait"><div class="portrait-orb"></div></div>
+<div class="stats">
+<div class="stat"><strong>12</strong><span>Class / Student</span></div>
+<div class="stat"><strong>∞</strong><span>Ideas to explore</span></div>
+</div>
+</aside>
+<div class="about-copy reveal">
+<h3>Not here to just scroll through the future. <span class="highlight">I'm here to help build it.</span></h3>
+<p>I'm Srejon Paroi Arpon, a Class 12 student with a big curiosity for how things work — and an even bigger drive to create things that feel different.</p>
+<p>I'm currently learning about <span class="highlight">Artificial Intelligence and Accounting</span>, exploring how technology, creativity and business can work together. I'm especially interested in understanding AI across the board: intelligent tools, agents, systems, workflows and the businesses built around them.</p>
+<p>I don't have everything figured out yet, and that's the point. This is where I document the process: what I'm learning, what I'm building, what works, what doesn't, and what I discover along the way.</p>
+<p>My goal is to become an AI expert who can understand the technology, use it thoughtfully, and build or manage AI-powered businesses and automation that solve real problems.</p>
+<div class="tags">
+<span class="pill">✦ Curious mind</span>
+<span class="pill">⚡ Builder in progress</span>
+<span class="pill">✝ Christian faith</span>
+<span class="pill">◎ Always learning</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section wrap" id="focus">
+<div class="head"><span>02 / WHAT I'M INTO</span><span>THE INTEREST MAP</span></div>
+<h2 class="title reveal">A few worlds.<br><em>One curious mind.</em></h2>
+<div class="cards">
+<article class="card reveal"><span class="card-num">01 / INTELLIGENCE</span><div class="card-icon">✳</div><h3>Artificial Intelligence</h3><p>Learning how AI works, exploring different tools and models, and turning intelligent tech into useful things.</p></article>
+<article class="card reveal"><span class="card-num">02 / AUTOMATION</span><div class="card-icon">⌘</div><h3>AI & Business</h3><p>Thinking about smarter workflows, AI agents, automation and business ideas that solve real problems.</p></article>
+<article class="card reveal"><span class="card-num">03 / CREATION</span><div class="card-icon">◈</div><h3>Design & Digital Worlds</h3><p>Into websites, visual experiences, motion, 3D experiments and turning random ideas into something people can explore.</p></article>
+<article class="card reveal"><span class="card-num">04 / LEARNING</span><div class="card-icon">⌁</div><h3>Accounting & Business</h3><p>Building a foundation in numbers, business thinking and how organizations make decisions.</p></article>
+<article class="card reveal"><span class="card-num">05 / CURIOSITY</span><div class="card-icon">✧</div><h3>Creative Experiments</h3><p>Trying new tools, testing ideas, making music and visuals, and learning by actually making stuff.</p></article>
+<article class="card reveal"><span class="card-num">06 / DIRECTION</span><div class="card-icon">↗</div><h3>Growth & Purpose</h3><p>Staying grounded in faith, learning with intention and aiming higher without pretending the journey is already complete.</p></article>
+</div>
+</section>
+
+<section class="section wrap" id="skills">
+<div class="head"><span>03 / THE ARSENAL</span><span>WHAT I'M LEARNING</span></div>
+<h2 class="title reveal">Loading skills.<br><em>Not claiming mastery.</em></h2>
+<div class="skill-layout">
+<div class="skill-group reveal">
+<h3>Exploring now</h3>
+<div class="skill"><div class="skill-top"><span>AI tools & prompting</span><span>Learning</span></div><div class="track"><i style="--w:48%"></i></div></div>
+<div class="skill"><div class="skill-top"><span>AI agents & automation</span><span>Learning</span></div><div class="track"><i style="--w:30%"></i></div></div>
+<div class="skill"><div class="skill-top"><span>Web design & development</span><span>Learning</span></div><div class="track"><i style="--w:35%"></i></div></div>
+<div class="skill"><div class="skill-top"><span>Accounting</span><span>Learning</span></div><div class="track"><i style="--w:38%"></i></div></div>
+</div>
+<div class="skill-group reveal">
+<h3>Next on the roadmap</h3>
+<div class="skill"><div class="skill-top"><span>Python & APIs</span><span>Up next</span></div><div class="track"><i style="--w:12%"></i></div></div>
+<div class="skill"><div class="skill-top"><span>Business process automation</span><span>Up next</span></div><div class="track"><i style="--w:15%"></i></div></div>
+<div class="skill"><div class="skill-top"><span>AI product strategy</span><span>Up next</span></div><div class="track"><i style="--w:10%"></i></div></div>
+<div class="skill"><div class="skill-top"><span>Data & analytics</span><span>Up next</span></div><div class="track"><i style="--w:10%"></i></div></div>
+</div>
+</div>
+<p class="note">A WORK IN PROGRESS, ALWAYS. These are visual learning indicators — not formal test scores or professional proficiency ratings. I'll update this section as I grow.</p>
+</section>
+
+<section class="section wrap" id="journey">
+<div class="head"><span>04 / THE LORE</span><span>THE JOURNEY SO FAR</span></div>
+<h2 class="title reveal">The story is still<br><em>being written.</em></h2>
+<div class="timeline">
+<div class="timeline-item reveal"><div class="date">RIGHT NOW</div><div><h3>Class 12 · Student mode</h3><p>Balancing school, curiosity and the process of figuring out what I want to build next.</p><span class="status">Current chapter</span></div></div>
+<div class="timeline-item reveal"><div class="date">CURRENT FOCUS</div><div><h3>AI + Accounting</h3><p>Exploring artificial intelligence while building a foundation in accounting and business thinking.</p><span class="status">In progress</span></div></div>
+<div class="timeline-item reveal"><div class="date">NEXT CHAPTER</div><div><h3>Build real AI-powered projects</h3><p>Move from experimenting with tools to creating useful automations, workflows and small products.</p><span class="status">On the roadmap</span></div></div>
+<div class="timeline-item reveal"><div class="date">THE BIG VISION</div><div><h3>Understand AI. Build with it. Lead with purpose.</h3><p>Grow into an AI professional who can work across the ecosystem and manage businesses powered by intelligent systems.</p><span class="status">Long-term ambition</span></div></div>
+</div>
+</section>
+
+<section class="section wrap" id="work">
+<div class="head"><span>05 / THE LAB</span><span>IDEAS → EXPERIMENTS → BUILDS</span></div>
+<h2 class="title reveal">Things I'm cooking<br><em>up.</em></h2>
+<div class="projects">
+<article class="project reveal"><div class="art"><div class="shape"></div></div><div class="project-info"><span class="meta">01 / WEB EXPERIENCE · IN PROGRESS</span><h3>AETHER — Personal Universe</h3><p>This website: a home for my journey, projects, experiments, ideas and the things I'm learning.</p></div></article>
+<article class="project reveal"><div class="art alt"><div class="shape"></div></div><div class="project-info"><span class="meta">02 / AI AUTOMATION · FUTURE BUILD</span><h3>Workflow Experiments</h3><p>A space to test how AI tools and automations can make everyday tasks and small business workflows easier.</p></div></article>
+<article class="project reveal"><div class="art third"><div class="shape"></div></div><div class="project-info"><span class="meta">03 / CREATIVE TECH · EXPLORING</span><h3>Motion Playground</h3><p>Small visual experiments with animation, interactive design and digital storytelling.</p></div></article>
+<article class="project reveal"><div class="art fourth"><div class="shape"></div></div><div class="project-info"><span class="meta">04 / KNOWLEDGE · PLANNED</span><h3>AI Field Notes</h3><p>A growing collection of useful discoveries, tool breakdowns and lessons from learning the AI ecosystem.</p></div></article>
+</div>
+<p class="note">Keeping it real: some entries are active experiments, while others are concepts or planned builds. I'll label them honestly as they evolve.</p>
+</section>
+
+<section class="section wrap" id="journal">
+<div class="head"><span>06 / BRAIN DUMP</span><span>NOTES FROM THE JOURNEY</span></div>
+<h2 class="title reveal">Thoughts, tabs &<br><em>tiny discoveries.</em></h2>
+<div class="journal-grid">
+<article class="journal-feature reveal">
+<span class="eyebrow">THE JOURNAL / COMING SOON</span>
+<h3>A place for ideas that deserve more than a browser tab.</h3>
+<p>I'll use this space for notes on AI tools, experiments, lessons, creative process, business ideas and whatever else I can't stop thinking about.</p>
+<span class="status">First posts in progress</span>
+</article>
+<div class="journal-side reveal">
+<span class="eyebrow">POSSIBLE DEEP DIVES</span>
+<a href="#toolbox">AI tools I'm exploring ↗</a>
+<a href="#focus">What makes automation useful? ↗</a>
+<a href="#journey">Lessons from being a beginner ↗</a>
+<a href="#faith">Faith, purpose & ambition ↗</a>
+</div>
+</div>
+</section>
+
+<section class="section wrap" id="toolbox">
+<div class="head"><span>07 / THE TOOLBOX</span><span>USEFUL CORNERS OF THE INTERNET</span></div>
+<h2 class="title reveal">Good tools.<br><em>Better ideas.</em></h2>
+<div class="tools">
+<a class="tool reveal" href="https://chatgpt.com/" target="_blank" rel="noopener"><b>ChatGPT ↗</b><span>AI assistant</span></a>
+<a class="tool reveal" href="https://claude.ai/" target="_blank" rel="noopener"><b>Claude ↗</b><span>AI assistant</span></a>
+<a class="tool reveal" href="https://www.perplexity.ai/" target="_blank" rel="noopener"><b>Perplexity ↗</b><span>AI research</span></a>
+<a class="tool reveal" href="https://n8n.io/" target="_blank" rel="noopener"><b>n8n ↗</b><span>Workflow automation</span></a>
+<a class="tool reveal" href="https://www.figma.com/" target="_blank" rel="noopener"><b>Figma ↗</b><span>Interface design</span></a>
+<a class="tool reveal" href="https://www.freecodecamp.org/" target="_blank" rel="noopener"><b>freeCodeCamp ↗</b><span>Learn to code</span></a>
+<a class="tool reveal" href="https://developer.mozilla.org/" target="_blank" rel="noopener"><b>MDN ↗</b><span>Web documentation</span></a>
+<a class="tool reveal" href="https://github.com/" target="_blank" rel="noopener"><b>GitHub ↗</b><span>Build & share code</span></a>
+</div>
+</section>
+
+<section class="section wrap" id="faith">
+<div class="head"><span>08 / WHAT GROUNDS ME</span><span>FAITH & PURPOSE</span></div>
+<div class="faith-panel reveal">
+<span class="eyebrow" style="color:#c4b4ff">FAITH IS PART OF MY STORY</span>
+<h2 class="faith-quote">Big dreams. <em>Grounded heart.</em><br>One step at a time.</h2>
+<p>My Christian faith is an important part of who I am. It reminds me that ambition and achievement mean more when they're guided by humility, gratitude, kindness and purpose. I want to keep growing without losing sight of what matters.</p>
+<p>“Commit thy way unto the LORD; trust also in him; and he shall bring it to pass.”</p>
+<div class="verse">PSALM 37:5 · KJV</div>
+</div>
+</section>
+
+<section class="section wrap" id="contact">
+<div class="head"><span>09 / LET'S CONNECT</span><span>GOOD IDEAS START SOMEWHERE</span></div>
+<h2 class="title reveal">Got an idea?<br><em>Let's talk.</em></h2>
+<div class="contact-grid">
+<div class="reveal">
+<p class="contact-copy">Have a question, a cool idea, a collaboration in mind, or just want to connect? Send a message. I'm always up for learning something new and meeting people who are building interesting things.</p>
+<p class="contact-copy"><strong>Currently open to:</strong><br>Creative conversations · Learning together · Interesting projects</p>
+
+<!-- SOCIAL MEDIA LINKS -->
+<div class="tags social-links" aria-label="Social profiles">
+<a class="pill" href="https://github.com/srejonarpon8-stack" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+<a class="pill" href="https://www.instagram.com/_straw.hat.luffy_000/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+<a class="pill" href="https://www.youtube.com/@Srejonarpon8" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+</div>
+</div>
+
+<form class="form reveal" id="contactForm">
+<label>YOUR NAME<input id="senderName" required placeholder="What should I call you?"></label>
+<label>YOUR EMAIL<input id="senderEmail" type="email" required placeholder="you@example.com"></label>
+<label>WHAT'S ON YOUR MIND?<textarea id="senderMessage" rows="4" required placeholder="Tell me a little about it..."></textarea></label>
+<button class="btn" type="submit">Prepare message ↗</button>
+<p class="note">This currently opens your email app. To receive messages directly online, connect this form to an email service or backend. This page does not store submissions.</p>
+</form>
+</div>
+</section>
+
+</main>
+
+<footer class="wrap footer">
+<a class="brand" href="#home">AETHER<b>.</b></a>
+<span class="footer-note">MADE WITH CURIOSITY BY SREJON PAROI ARPON</span>
+<a class="back" href="#home">BACK TO TOP ↑</a>
+<span class="footer-note">© <span id="year"></span> · STILL BECOMING.</span>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+$('#year').textContent=new Date().getFullYear();
+
+const mb=$('#menuBtn'),menu=$('#menu');
+mb.addEventListener('click',()=>{
+menu.classList.toggle('open');
+mb.textContent=menu.classList.contains('open')?'CLOSE −':'MENU +';
+});
+
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+menu.classList.remove('open');
+mb.textContent='MENU +';
+}));
+
+const title=$('#heroTitle');
+title.innerHTML=[...title.textContent].map((c,i)=>`<span style="--i:${i}">${c}</span>`).join('');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+if(e.isIntersecting){
+e.target.classList.add('show');
+io.unobserve(e.target);
+}
+}),{threshold:.13});
+
+document.querySelectorAll('.reveal,.skill-group').forEach(x=>io.observe(x));
+
+const cursor=$('#cursor'),orb=$('#orb');
+window.addEventListener('pointermove',e=>{
+cursor.style.left=e.clientX+'px';
+cursor.style.top=e.clientY+'px';
+const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;
+orb.style.marginLeft=x*18+'px';
+orb.style.marginTop=y*12+'px';
+},{passive:true});
+
+const canvas=$('#particles'),ctx=canvas.getContext('2d');
+let pts=[],w,h;
+
+function resize(){
+let d=Math.min(devicePixelRatio||1,2);
+w=canvas.clientWidth;
+h=canvas.clientHeight;
+canvas.width=w*d;
+canvas.height=h*d;
+ctx.setTransform(d,0,0,d,0,0);
+pts=Array.from({length:Math.min(85,Math.floor(w/14))},()=>({
+x:Math.random()*w,
+y:Math.random()*h,
+vx:(Math.random()-.5)*.22,
+vy:(Math.random()-.5)*.22,
+r:Math.random()*1.5+.3
+}));
+}
+
+function draw(){
+ctx.clearRect(0,0,w,h);
+pts.forEach((p,i)=>{
+p.x+=p.vx;
+p.y+=p.vy;
+if(p.x<0||p.x>w)p.vx*=-1;
+if(p.y<0||p.y>h)p.vy*=-1;
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,7);
+ctx.fillStyle='rgba(169,190,255,.65)';
+ctx.fill();
+
+for(let j=i+1;j<pts.length;j++){
+let q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);
+if(d<115){
+ctx.beginPath();
+ctx.moveTo(p.x,p.y);
+ctx.lineTo(q.x,q.y);
+ctx.strokeStyle=`rgba(130,157,255,${(1-d/115)*.12})`;
+ctx.stroke();
+}
+}
+});
+requestAnimationFrame(draw);
+}
+
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+resize();
+draw();
+addEventListener('resize',resize);
+}
+
+// Replace this with your public contact email to enable the mail-app draft.
+const CONTACT_EMAIL='YOUR_EMAIL@example.com';
+
+$('#contactForm').addEventListener('submit',e=>{
+e.preventDefault();
+
+if(CONTACT_EMAIL==='YOUR_EMAIL@example.com'){
+alert('The form is ready, but the owner email is not configured yet. Replace YOUR_EMAIL@example.com in the HTML with your public email address.');
+return;
+}
+
+let n=$('#senderName').value.trim(),
+em=$('#senderEmail').value.trim(),
+m=$('#senderMessage').value.trim();
+
+location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('AETHER message from '+n)}&body=${encodeURIComponent(m+'\\n\\nFrom: '+n+'\\nReply to: '+em)}`;
+});
+</script>
+
+</body>
+</html>
